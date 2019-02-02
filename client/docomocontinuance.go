@@ -18,8 +18,6 @@ type (
 		OrderID     string
 		Amount      int
 		Tax         int
-		FirstAmount int
-		FirstTax    int
 	}
 
 	ExecTranDocomoContinuanceIdPassReq struct {
