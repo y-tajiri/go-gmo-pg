@@ -3,23 +3,25 @@ package client
 import (
 	"context"
 	"fmt"
+	"github.com/y-tajiri/go-gmo-pg/sjis"
 	"net/http"
 	"net/url"
 	"path"
+	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/y-tajiri/go-gmo-pg/config"
 )
 
-type(
+type (
 	HTTPClient interface {
 		Do(*http.Request) (*http.Response, error)
 	}
 	Client struct {
-		url     *url.URL
-		client  HTTPClient
-		config  config.Config
-
+		url    *url.URL
+		client HTTPClient
+		config config.Config
 	}
 )
 
@@ -31,7 +33,6 @@ func SetHTTPClient(cli HTTPClient) ClientOption {
 	}
 }
 
-
 func NewClient(config config.Config, opts ...ClientOption) (*Client, error) {
 
 	u, err := url.ParseRequestURI(config.EndPoint)
@@ -40,8 +41,8 @@ func NewClient(config config.Config, opts ...ClientOption) (*Client, error) {
 	}
 
 	c := &Client{
-		url:       u,
-		client:    http.DefaultClient,
+		url:    u,
+		client: http.DefaultClient,
 		config: config,
 	}
 
@@ -51,7 +52,6 @@ func NewClient(config config.Config, opts ...ClientOption) (*Client, error) {
 
 	return c, nil
 }
-
 
 func (c *Client) newRequest(ctx context.Context, spath string, data url.Values) (*http.Request, error) {
 	u := *c.url
@@ -80,11 +80,42 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 // Post sends a POST request and returns Response
-func (c *Client) Post(ctx context.Context, spath string, data url.Values)  (*http.Response, error) {
+func (c *Client) Post(ctx context.Context, spath string, data url.Values) (*http.Response, error) {
 	req, err := c.newRequest(ctx, spath, data)
 	if err != nil {
 		return nil, err
 	}
 
 	return c.Do(req)
+}
+
+func (c *Client) initRequestData(req interface{}) (data url.Values) {
+	data = url.Values{}
+	t := reflect.TypeOf(req)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	if t.Kind() != reflect.Struct {
+		return
+	}
+	val := reflect.ValueOf(req)
+	for i := 0; i < t.NumField(); i++ {
+		switch t.Field(i).Type.Kind() {
+		case reflect.String:
+			s, err := sjis.ConvertUtf8ToSjis(val.Elem().Field(i).String())
+			if err != nil {
+				s = val.Elem().Field(i).String()
+			}
+			data.Set(t.Field(i).Name, s)
+			break
+		case reflect.Int:
+			data.Set(
+				t.Field(i).Name,
+				strconv.Itoa(int(val.Elem().Field(i).Int())),
+			)
+			break
+		}
+	}
+	fmt.Printf("sss %+v\n", val)
+	return data
 }

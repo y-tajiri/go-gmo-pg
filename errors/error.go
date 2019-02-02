@@ -10,7 +10,7 @@ var (
 )
 
 type (
-	ErrorGMOPG struct{
+	ErrorGMOPG struct {
 		ErrCode string
 		ErrInfo string
 	}
