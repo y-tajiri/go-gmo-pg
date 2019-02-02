@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/url"
 	"strconv"
@@ -68,7 +67,6 @@ func (c *Client) ExecTranSbContinuanceIdPass(ctx context.Context, req *ExecTranS
 		return nil, err
 	}
 	b, _ := ioutil.ReadAll(resp.Body)
-	fmt.Printf("ssss %s", b)
 	retVals, err := url.ParseQuery(string(b))
 	if err != nil {
 		return nil, err

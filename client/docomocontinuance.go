@@ -7,12 +7,14 @@ import (
 	"net/url"
 )
 
+
 type (
-	EntryTranAuContinuanceIdPassResponse struct {
+	EntryTranDocomoContinuanceIdPassResponse struct {
 		AccessID   string
 		AccessPass string
 	}
-	EntryTranAuContinuanceIdPassReq struct {
+
+	EntryTranDocomoContinuanceIdPassReq struct {
 		OrderID     string
 		Amount      int
 		Tax         int
@@ -20,24 +22,20 @@ type (
 		FirstTax    int
 	}
 
-	ExecTranAuContinuanceIdPassReq struct {
+	ExecTranDocomoContinuanceIdPassReq struct {
 		AccessID         string
 		AccessPass       string
 		OrderID          string
 		ClientField1     string
 		ClientField2     string
 		ClientField3     string
+		FirstMonthFreeFlag int
+		ConfirmBaseDate int
 		RetURL           string
-		Commodity        string
-		AccountTimingKbn string
-		AccountTiming    int
-		FirstAccountDate string
 		PaymentTermSec   int
-		ServiceName      string
-		ServiceTel       string
 	}
 
-	ExecTranAuContinuanceIdPassResponse struct {
+	ExecTranDocomoContinuanceIdPassResponse struct {
 		AccessID       string
 		Token          string
 		StartURL       string
@@ -45,15 +43,11 @@ type (
 	}
 )
 
-const (
-	AccountTimingKbnCustom  = "01"
-	AccountTimingKbnLastDay = "02"
-)
 
-func (c *Client) EntryTranAuContinuanceIdPass(ctx context.Context, req *EntryTranAuContinuanceIdPassReq) (*EntryTranAuContinuanceIdPassResponse, error) {
+func (c *Client) EntryTranDocomoContinuanceIdPass(ctx context.Context, req *EntryTranDocomoContinuanceIdPassReq) (*EntryTranDocomoContinuanceIdPassResponse, error) {
 
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/EntryTranAuContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/EntryTranDocomoContinuance.idPass", data)
 	if err != nil {
 		return nil, err
 	}
@@ -66,16 +60,16 @@ func (c *Client) EntryTranAuContinuanceIdPass(ctx context.Context, req *EntryTra
 	if retVals.Get("ErrCode") != "" {
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
-	ret := &EntryTranAuContinuanceIdPassResponse{}
+	ret := &EntryTranDocomoContinuanceIdPassResponse{}
 	ret.AccessID = retVals.Get("AccessID")
 	ret.AccessPass = retVals.Get("AccessPass")
 	return ret, nil
 
 }
 
-func (c *Client) ExecTranAuContinuanceIdPass(ctx context.Context, req *ExecTranAuContinuanceIdPassReq) (*ExecTranAuContinuanceIdPassResponse, error) {
+func (c *Client) ExecTranDocomoContinuanceIdPass(ctx context.Context, req *ExecTranDocomoContinuanceIdPassReq) (*ExecTranDocomoContinuanceIdPassResponse, error) {
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/ExecTranAuContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/ExecTranDocomoContinuance.idPass", data)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +81,7 @@ func (c *Client) ExecTranAuContinuanceIdPass(ctx context.Context, req *ExecTranA
 	if retVals.Get("ErrCode") != "" {
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
-	ret := &ExecTranAuContinuanceIdPassResponse{}
+	ret := &ExecTranDocomoContinuanceIdPassResponse{}
 	ret.AccessID = retVals.Get("AccessID")
 	ret.StartLimitDate = retVals.Get("StartLimitDate")
 	ret.StartURL = retVals.Get("StartURL")

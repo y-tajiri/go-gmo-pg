@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 	"github.com/y-tajiri/go-gmo-pg/sjis"
 	"net/http"
 	"net/url"
@@ -58,7 +57,6 @@ func (c *Client) newRequest(ctx context.Context, spath string, data url.Values) 
 	u.Path = path.Join(c.url.Path, spath)
 	data.Add("ShopID", c.config.ShopID)
 	data.Add("ShopPass", c.config.ShopPass)
-	fmt.Printf("\n%s\n\n", data.Encode())
 	req, err := http.NewRequest("POST", u.String(), strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
@@ -116,6 +114,5 @@ func (c *Client) initRequestData(req interface{}) (data url.Values) {
 			break
 		}
 	}
-	fmt.Printf("sss %+v\n", val)
 	return data
 }

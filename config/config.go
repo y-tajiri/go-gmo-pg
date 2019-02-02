@@ -1,10 +1,11 @@
 package config
 
-import(
+import (
 	"gopkg.in/go-playground/validator.v9"
 )
+
 type (
-	Config struct{
+	Config struct {
 		EndPoint string `validate:"required"`
 		Version  string
 		ShopID   string `validate:"required"`
@@ -12,11 +13,10 @@ type (
 	}
 )
 
-
-func New(endpoint, shopID, shopPass string) (*Config,error) {
+func New(endpoint, shopID, shopPass string) (*Config, error) {
 	c := &Config{
 		EndPoint: endpoint,
-		ShopID: shopID,
+		ShopID:   shopID,
 		ShopPass: shopPass,
 	}
 	validate := validator.New()
