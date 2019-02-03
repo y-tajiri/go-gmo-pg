@@ -41,7 +41,7 @@ func (c *Client) EntryTranSbContinuanceIdPass(ctx context.Context, orderID strin
 	data.Set("OrderID", orderID)
 	data.Set("Amount", strconv.Itoa(amount))
 	data.Set("Tax", strconv.Itoa(tax))
-	resp, err := c.Post(ctx, "/payment/EntryTranSbContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/EntryTranSbContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (c *Client) EntryTranSbContinuanceIdPass(ctx context.Context, orderID strin
 
 func (c *Client) ExecTranSbContinuanceIdPass(ctx context.Context, req *ExecTranSbContinuanceIdPassReq) (*ExecTranSbContinuanceIdPassResponse, error) {
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/ExecTranSbContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/ExecTranSbContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}

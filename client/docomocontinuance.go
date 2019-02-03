@@ -7,7 +7,6 @@ import (
 	"net/url"
 )
 
-
 type (
 	EntryTranDocomoContinuanceIdPassResponse struct {
 		AccessID   string
@@ -15,22 +14,22 @@ type (
 	}
 
 	EntryTranDocomoContinuanceIdPassReq struct {
-		OrderID     string
-		Amount      int
-		Tax         int
+		OrderID string
+		Amount  int
+		Tax     int
 	}
 
 	ExecTranDocomoContinuanceIdPassReq struct {
-		AccessID         string
-		AccessPass       string
-		OrderID          string
-		ClientField1     string
-		ClientField2     string
-		ClientField3     string
+		AccessID           string
+		AccessPass         string
+		OrderID            string
+		ClientField1       string
+		ClientField2       string
+		ClientField3       string
 		FirstMonthFreeFlag int
-		ConfirmBaseDate int
-		RetURL           string
-		PaymentTermSec   int
+		ConfirmBaseDate    int
+		RetURL             string
+		PaymentTermSec     int
 	}
 
 	ExecTranDocomoContinuanceIdPassResponse struct {
@@ -41,11 +40,10 @@ type (
 	}
 )
 
-
 func (c *Client) EntryTranDocomoContinuanceIdPass(ctx context.Context, req *EntryTranDocomoContinuanceIdPassReq) (*EntryTranDocomoContinuanceIdPassResponse, error) {
 
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/EntryTranDocomoContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/EntryTranDocomoContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +65,7 @@ func (c *Client) EntryTranDocomoContinuanceIdPass(ctx context.Context, req *Entr
 
 func (c *Client) ExecTranDocomoContinuanceIdPass(ctx context.Context, req *ExecTranDocomoContinuanceIdPassReq) (*ExecTranDocomoContinuanceIdPassResponse, error) {
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/ExecTranDocomoContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/ExecTranDocomoContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}

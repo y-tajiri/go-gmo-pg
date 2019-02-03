@@ -52,11 +52,16 @@ func NewClient(config config.Config, opts ...ClientOption) (*Client, error) {
 	return c, nil
 }
 
-func (c *Client) newRequest(ctx context.Context, spath string, data url.Values) (*http.Request, error) {
+func (c *Client) newRequest(ctx context.Context, spath string, data url.Values, useSite bool) (*http.Request, error) {
 	u := *c.url
 	u.Path = path.Join(c.url.Path, spath)
-	data.Add("ShopID", c.config.ShopID)
-	data.Add("ShopPass", c.config.ShopPass)
+	if useSite {
+		data.Add("SiteID", c.config.SiteID)
+		data.Add("SitePass", c.config.SitePass)
+	} else {
+		data.Add("ShopID", c.config.ShopID)
+		data.Add("ShopPass", c.config.ShopPass)
+	}
 	req, err := http.NewRequest("POST", u.String(), strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
@@ -78,8 +83,8 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 // Post sends a POST request and returns Response
-func (c *Client) Post(ctx context.Context, spath string, data url.Values) (*http.Response, error) {
-	req, err := c.newRequest(ctx, spath, data)
+func (c *Client) Post(ctx context.Context, spath string, data url.Values, useSite bool) (*http.Response, error) {
+	req, err := c.newRequest(ctx, spath, data, useSite)
 	if err != nil {
 		return nil, err
 	}

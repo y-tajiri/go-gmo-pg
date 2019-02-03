@@ -10,6 +10,8 @@ type (
 		Version  string
 		ShopID   string `validate:"required"`
 		ShopPass string `validate:"required"`
+		SiteID   string `validate:"required"`
+		SitePass string `validate:"required"`
 	}
 )
 

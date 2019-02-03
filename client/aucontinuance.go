@@ -53,7 +53,7 @@ const (
 func (c *Client) EntryTranAuContinuanceIdPass(ctx context.Context, req *EntryTranAuContinuanceIdPassReq) (*EntryTranAuContinuanceIdPassResponse, error) {
 
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/EntryTranAuContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/EntryTranAuContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *Client) EntryTranAuContinuanceIdPass(ctx context.Context, req *EntryTra
 
 func (c *Client) ExecTranAuContinuanceIdPass(ctx context.Context, req *ExecTranAuContinuanceIdPassReq) (*ExecTranAuContinuanceIdPassResponse, error) {
 	data := c.initRequestData(req)
-	resp, err := c.Post(ctx, "/payment/ExecTranAuContinuance.idPass", data)
+	resp, err := c.Post(ctx, "/payment/ExecTranAuContinuance.idPass", data, false)
 	if err != nil {
 		return nil, err
 	}
