@@ -15,11 +15,13 @@ type (
 	}
 )
 
-func New(endpoint, shopID, shopPass string) (*Config, error) {
+func New(endpoint, shopID, shopPass,siteID, sitePass string) (*Config, error) {
 	c := &Config{
 		EndPoint: endpoint,
 		ShopID:   shopID,
 		ShopPass: shopPass,
+		SiteID:   siteID,
+		SitePass: sitePass,
 	}
 	validate := validator.New()
 	err := validate.Struct(c)
