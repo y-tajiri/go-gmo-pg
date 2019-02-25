@@ -44,7 +44,7 @@ type (
 	}
 
 )
-func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassReq) (EntryTranIdPassResponse, error) {
+func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassReq) (*EntryTranIdPassResponse, error) {
 	data := c.initRequestData(req)
 	resp, err := c.Post(ctx, "/payment/EntryTran.idPass", data, false)
 	if err != nil {
@@ -59,7 +59,7 @@ func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassR
 	if retVals.Get("ErrCode") != "" {
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
-	ret := &EntryTranAuContinuanceIdPassResponse{}
+	ret := &EntryTranIdPassResponse{}
 	ret.AccessID = retVals.Get("AccessID")
 	ret.AccessPass = retVals.Get("AccessPass")
 	return ret, nil
