@@ -32,7 +32,7 @@ type (
 		AccessID   string
 		AccessPass string
 	}
-	ExecTranAuContinuanceIdPassReq struct {
+	ExecTranIdPassReq struct {
 		AccessID         string
 		AccessPass       string
 		OrderID          string
