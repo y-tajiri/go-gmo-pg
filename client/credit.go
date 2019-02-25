@@ -24,8 +24,35 @@ type (
 		CardNo  string
 		Forward string
 	}
+	EntryTranIdPassReq struct {
+		OrderID     string
+		JobCd       string
+	}
+	EntryTranIdPassResponse struct {
+		AccessID   string
+		AccessPass string
+	}
 )
+func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassReq) (EntryTranIdPassResponse, error) {
+	data := c.initRequestData(req)
+	resp, err := c.Post(ctx, "/payment/EntryTran.idPass", data, false)
+	if err != nil {
+		return nil, err
+	}
 
+	b, _ := ioutil.ReadAll(resp.Body)
+	retVals, err := url.ParseQuery(string(b))
+	if err != nil {
+		return nil, err
+	}
+	if retVals.Get("ErrCode") != "" {
+		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
+	}
+	ret := &EntryTranAuContinuanceIdPassResponse{}
+	ret.AccessID = retVals.Get("AccessID")
+	ret.AccessPass = retVals.Get("AccessPass")
+	return ret, nil
+}
 func (c *Client) SaveMemberIdPass(ctx context.Context, memberID string, memberName string) (*SaveMemberIdPassResponse, error) {
 
 	data := url.Values{}
