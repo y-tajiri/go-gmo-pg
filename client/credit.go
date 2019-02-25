@@ -118,15 +118,15 @@ func (c *Client) ExecTranIdPass(ctx context.Context, req *ExecTranIdPassReq) (er
 	data := c.initRequestData(req)
 	resp, err := c.Post(ctx, "/payment/ExecTran.idPass", data, false)
 	if err != nil {
-		return nil, err
+		returnerr
 	}
 	b, _ := ioutil.ReadAll(resp.Body)
 	retVals, err := url.ParseQuery(string(b))
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if retVals.Get("ErrCode") != "" {
-		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
+		return errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
-	return ret, nil
+	return nil
 }
