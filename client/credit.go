@@ -32,6 +32,17 @@ type (
 		AccessID   string
 		AccessPass string
 	}
+	ExecTranAuContinuanceIdPassReq struct {
+		AccessID         string
+		AccessPass       string
+		OrderID          string
+		Method           int
+		PayTimes         int
+		MemberID         string
+		SeqMode          int
+		CardSeq          int
+	}
+
 )
 func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassReq) (EntryTranIdPassResponse, error) {
 	data := c.initRequestData(req)
@@ -101,4 +112,21 @@ func (c *Client) SaveCreditIdPass(ctx context.Context, req *SaveCardIdPassReq) (
 	ret.Forward = retVals.Get("Forward")
 	return ret, nil
 
+}
+
+func (c *Client) ExecTranIdPass(ctx context.Context, req *ExecTranIdPassReq) (error) {
+	data := c.initRequestData(req)
+	resp, err := c.Post(ctx, "/payment/ExecTran.idPass", data, false)
+	if err != nil {
+		return nil, err
+	}
+	b, _ := ioutil.ReadAll(resp.Body)
+	retVals, err := url.ParseQuery(string(b))
+	if err != nil {
+		return nil, err
+	}
+	if retVals.Get("ErrCode") != "" {
+		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
+	}
+	return ret, nil
 }
