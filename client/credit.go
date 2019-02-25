@@ -118,7 +118,7 @@ func (c *Client) ExecTranIdPass(ctx context.Context, req *ExecTranIdPassReq) (er
 	data := c.initRequestData(req)
 	resp, err := c.Post(ctx, "/payment/ExecTran.idPass", data, false)
 	if err != nil {
-		returnerr
+		return err
 	}
 	b, _ := ioutil.ReadAll(resp.Body)
 	retVals, err := url.ParseQuery(string(b))
