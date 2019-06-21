@@ -28,6 +28,7 @@ type (
 		OrderID     string
 		JobCd       string
 		Amount      int
+                TdFlag      int
 	}
 	EntryTranIdPassResponse struct {
 		AccessID   string
