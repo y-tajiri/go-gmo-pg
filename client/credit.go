@@ -27,6 +27,8 @@ type (
 	EntryTranIdPassReq struct {
 		OrderID     string
 		JobCd       string
+		Amount      int
+                TdFlag      int
 	}
 	EntryTranIdPassResponse struct {
 		AccessID   string
@@ -38,12 +40,13 @@ type (
 		OrderID          string
 		Method           int
 		PayTimes         int
-		MemberID         string
+		Token            string
 		SeqMode          int
 		CardSeq          int
 	}
 
 )
+
 func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassReq) (*EntryTranIdPassResponse, error) {
 	data := c.initRequestData(req)
 	resp, err := c.Post(ctx, "/payment/EntryTran.idPass", data, false)
@@ -64,6 +67,7 @@ func (c *Client) EntryTranIdPassCheck(ctx context.Context, req *EntryTranIdPassR
 	ret.AccessPass = retVals.Get("AccessPass")
 	return ret, nil
 }
+
 func (c *Client) SaveMemberIdPass(ctx context.Context, memberID string, memberName string) (*SaveMemberIdPassResponse, error) {
 
 	data := url.Values{}
