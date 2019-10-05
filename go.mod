@@ -8,3 +8,5 @@ require (
 	golang.org/x/text v0.3.0
 	gopkg.in/go-playground/validator.v9 v9.26.0
 )
+
+go 1.13
