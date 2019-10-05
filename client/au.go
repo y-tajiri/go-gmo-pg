@@ -48,13 +48,14 @@ type (
 	ExecTranAuAcceptIdPassResponse struct {
 		AccessID       string
 		Token          string
+		StartURL   string
 	}
 	ExecTranAuIdPassResponse struct {
 		OrderID       string
 	}
 )
 
-func (c *Client) EntryTranAuAcceptIdPass(ctx context.Context, orderID string) (*EntryTranAuIdPassResponse, error) {
+func (c *Client) EntryTranAuAcceptIdPass(ctx context.Context, orderID string) (*EntryTranAuAcceptIdPassResponse, error) {
 
 	data := url.Values{}
 	data.Set("OrderID", orderID)
@@ -70,9 +71,10 @@ func (c *Client) EntryTranAuAcceptIdPass(ctx context.Context, orderID string) (*
 	if retVals.Get("ErrCode") != "" {
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
-	ret := &EntryTranAuIdPassResponse{}
+	ret := &EntryTranAuAcceptIdPassResponse{}
 	ret.AccessID = retVals["AccessID"][0]
 	ret.AccessPass = retVals["AccessPass"][0]
+
 	return ret, nil
 
 }
@@ -94,6 +96,7 @@ func (c *Client) ExecTranAuAcceptIdPass(ctx context.Context, req *ExecTranAuAcce
 	ret := &ExecTranAuAcceptIdPassResponse{}
 	ret.AccessID = retVals.Get("AccessID")
 	ret.Token = retVals.Get("Token")
+	ret.StartURL = retVals.Get("StartURL")
 	return ret, nil
 }
 
