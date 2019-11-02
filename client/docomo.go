@@ -51,7 +51,9 @@ type (
 	}
 
 	ExecTranDocomoIdPassResponse struct {
-		OrderID string
+		AccessID string
+		Token string
+		StartURL string
 	}
 )
 
@@ -141,6 +143,8 @@ func (c *Client) ExecTranDocomoIdPass(ctx context.Context, req *ExecTranDocomoId
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
 	ret := &ExecTranDocomoIdPassResponse{}
-	ret.OrderID = retVals.Get("OrderID")
+	ret.AccessID = retVals.Get("AccessID")
+	ret.Token = retVals.Get("Token")
+	ret.StartURL = retVals.Get("StartURL")
 	return ret, nil
 }

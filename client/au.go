@@ -51,7 +51,9 @@ type (
 		StartURL   string
 	}
 	ExecTranAuIdPassResponse struct {
-		OrderID       string
+		AccessID       string
+		Token          string
+		StartURL   string
 	}
 )
 
@@ -143,6 +145,8 @@ func (c *Client) ExecTranAuIdPass(ctx context.Context, req *ExecTranAuIdPassReq)
 		return nil, errors.NewErrorGMOPG(retVals.Get("ErrCode"), retVals.Get("ErrInfo"))
 	}
 	ret := &ExecTranAuIdPassResponse{}
-	ret.OrderID = retVals.Get("OrderID")
+	ret.AccessID = retVals.Get("AccessID")
+	ret.Token = retVals.Get("Token")
+	ret.StartURL = retVals.Get("StartURL")
 	return ret, nil
 }
