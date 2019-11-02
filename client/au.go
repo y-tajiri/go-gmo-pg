@@ -43,6 +43,7 @@ type (
 		ServiceName        string
 		ServiceTel         string
 		AuAcceptCode       string
+		RetURL             string
 	}
 
 	ExecTranAuAcceptIdPassResponse struct {
