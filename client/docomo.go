@@ -45,9 +45,6 @@ type (
 		ClientField2       string
 		ClientField3       string
 		PaymentTermSec     int
-		ChargeDay          int
-		FirstMonthFreeFlag int
-		DocomoAcceptCode   string
 	}
 
 	ExecTranDocomoIdPassResponse struct {
