@@ -20,20 +20,23 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	orderID := "x12	"
+	orderID := "x130"
 	ctx := context.Background()
-	e, err := cli.EntryTranDocomoAcceptIdPass(ctx, orderID)
+	e, err := cli.EntryTranAuIdPass(ctx, orderID,1000,10)
 	if err != nil {
 		panic(err)
 	}
-	req := &client.ExecTranDocomoAcceptIdPassReq{
+	req := &client.ExecTranAuIdPassReq{
 		AccessID: e.AccessID,
 		AccessPass: e.AccessPass,
 		OrderID: orderID,
 		RetURL: "https://test.careclub.jp/acceptid",
-		PaymentTermSec: 3600,
+		Commodity: "摘要",
+		ServiceName: "晶文社",
+		ServiceTel: "03-1111-1111",
+		//PaymentTermSec: 3600,
 	}
-	z, err := cli.ExecTranDocomoAcceptIdPass(ctx, req)
+	z, err := cli.ExecTranAuIdPass(ctx, req)
 	if err != nil {
 		panic(err)
 	}

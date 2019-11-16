@@ -110,7 +110,6 @@ func (c *Client) EntryTranAuIdPass(ctx context.Context, orderID string, amount, 
 	data.Set("Amount", strconv.Itoa(amount))
 	data.Set("Tax", strconv.Itoa(tax))
 	data.Set("JobCd", "CAPTURE")
-	data.Set("PaymentType", "1")
 	resp, err := c.Post(ctx, "/payment/EntryTranAu.idPass", data, false)
 	if err != nil {
 		return nil, err

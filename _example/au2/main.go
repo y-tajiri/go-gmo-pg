@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	orderID := "x13"
+	orderID := "x15"
 	ctx := context.Background()
 	e, err := cli.EntryTranDocomoIdPass(ctx, orderID,1000,100)
 	if err != nil {
@@ -31,7 +31,7 @@ func main() {
 		OrderID: orderID,
 		RetURL: "https://test.careclub.jp/acceptid",
 		PaymentTermSec: 3600,
-		DocomoAcceptCode: "T19278091749",
+		//DocomoAcceptCode: "T19278091749",
 	}
 	fmt.Printf("xxx")
 	z, err := cli.ExecTranDocomoIdPass(ctx, req)

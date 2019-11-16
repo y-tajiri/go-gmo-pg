@@ -104,7 +104,6 @@ func (c *Client) EntryTranDocomoIdPass(ctx context.Context, orderID string, amou
 	data.Set("Amount", strconv.Itoa(amount))
 	data.Set("Tax", strconv.Itoa(tax))
 	data.Set("JobCd", "CAPTURE")
-	data.Set("PaymentType", "1")
 	resp, err := c.Post(ctx, "/payment/EntryTranDocomo.idPass", data, false)
 	if err != nil {
 		return nil, err
