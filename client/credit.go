@@ -43,6 +43,10 @@ type (
 		Token            string
 		SeqMode          int
 		CardSeq          int
+                ClientField1     string
+                ClientField2     string
+                ClientField3     string
+                ClientFieldFlag  string
 	}
 
 )
@@ -119,6 +123,9 @@ func (c *Client) SaveCreditIdPass(ctx context.Context, req *SaveCardIdPassReq) (
 }
 
 func (c *Client) ExecTranIdPass(ctx context.Context, req *ExecTranIdPassReq) (error) {
+        if req.ClientFieldFlag != "1" {
+           req.ClientFieldFlag = "0"
+        }
 	data := c.initRequestData(req)
 	resp, err := c.Post(ctx, "/payment/ExecTran.idPass", data, false)
 	if err != nil {
